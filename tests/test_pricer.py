@@ -1,6 +1,11 @@
+from functools import partial
+
 import pytest
 
 import pricer
+
+
+approx = partial(pytest.approx, abs=1e-02)
 
 
 @pytest.fixture
@@ -28,9 +33,9 @@ def test_1(catalogue):
 
     subtotal, discount, total = pricer.sum_up(basket, offers, catalogue)
 
-    assert subtotal == 5.16
-    assert discount == 0.99
-    assert total == 4.17
+    assert approx(subtotal) == 5.16
+    assert approx(discount) == 0.99
+    assert approx(total) == 4.17
 
 
 def test_2(catalogue):
@@ -47,6 +52,6 @@ def test_2(catalogue):
 
     subtotal, discount, total = pricer.sum_up(basket, offers, catalogue)
 
-    assert subtotal == 6.96
-    assert discount == 0.95
-    assert total == 6.01
+    assert approx(subtotal) == 6.96
+    assert approx(discount) == 0.95
+    assert approx(total) == 6.01
